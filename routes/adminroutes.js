@@ -76,13 +76,52 @@ router.get("/adminlogout", auth1, (req, res) => {
 //             if (err) console.log(err);
 //             else console.log("Success");
 //             res.send(Person);
+//             res.redirect("/admin/dashboard");
 //           });
 //         });
 //       });
 //     });
 //   });
 // });
-router.post("/changepassword", function (req, res) {
+// router.post("/changepassword", function (req, res) {
+//   const { password, passwordnew, passwordconfirm } = req.body;
+
+//   console.log(req.user);
+//   console.log(req.user._id + "id");
+
+//   User.findById(req.user._id, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     }
+
+//     bcrypt.compare(password, data.password, (err, isMatch) => {
+//       if (err) throw err;
+//       if (!isMatch) {
+//         res.send({
+//           Error: "Password is Incorrect",
+//         });
+//       } else {
+//         data.password = req.body.passwordnew;
+
+//         bcrypt.genSalt(10, (err, salt) => {
+//           bcrypt.hash(data.password, salt, (err, hash) => {
+//             if (err) throw err;
+
+//             data.password = hash;
+
+//             data.save(function (err, Person) {
+//               if (err) console.log(err);
+//               else console.log("Success");
+//               res.redirect("/admin/dashboard");
+//             });
+//           });
+//         });
+//       }
+//     });
+//   });
+// });
+
+router.post("/changepassword", auth1, function (req, res) {
   const { password, passwordnew, passwordconfirm } = req.body;
 
   console.log(req.user);
@@ -92,30 +131,32 @@ router.post("/changepassword", function (req, res) {
     if (err) {
       console.log(err);
     }
-
     bcrypt.compare(password, data.password, (err, isMatch) => {
-      if (err) throw err;
+      if (err) {
+        res.send(err);
+      }
       if (!isMatch) {
-        res.send({
-          Error: "Password is Incorrect",
-        });
-      } else {
-        data.password = req.body.passwordnew;
+        // res.send({
+        //   Error: "Password is Incorrect",
+        // });
+        console.log("not match");
+      }
+      data.password = passwordnew;
+      console.log(data.password);
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(data.password, salt, (err, hash) => {
-            if (err) throw err;
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(data.password, salt, (err, hash) => {
+          if (err) throw err;
 
-            data.password = hash;
+          data.password = hash;
 
-            data.save(function (err, Person) {
-              if (err) console.log(err);
-              else console.log("Success");
-              res.redirect("/admin/dashboard");
-            });
+          data.save(function (err, Person) {
+            if (err) console.log(err);
+            else console.log("Success");
+            res.send(Person);
           });
         });
-      }
+      });
     });
   });
 });
