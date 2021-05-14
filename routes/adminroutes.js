@@ -17,6 +17,18 @@ router.post("/adminusers", async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+// router.put("/adminusers/city", async (user, cb) => {
+//   Admin.find({ city: user.city }, function (err, docs) {
+//     if (docs.length) {
+//       cb("City Name already exists ", null);
+//     } else {
+//       user.save(function (err) {
+//         cb(err, user);
+//       });
+//     }
+//   });
+// });
 //to login a user
 router.post("/adminlogin", async (req, res) => {
   try {
