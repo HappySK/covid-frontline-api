@@ -43,46 +43,82 @@ router.get("/adminlogout", auth1, (req, res) => {
   }
 });
 //changepassword
-router.post("/adminchangepassword", auth1, function (req, res) {
-  const { password, passwordnew } = req.body;
+// router.post("/adminchangepassword", auth1, function (req, res) {
+//   const { password, passwordnew } = req.body;
+
+//   console.log(req.user);
+//   console.log(req.user._id + "id");
+
+//   Admin.findById(req.user._id, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     bcrypt.compare(password, data.password, (err, isMatch) => {
+//       if (err) {
+//         res.send(err);
+//       }
+//       if (!isMatch) {
+//         // res.send({
+//         //   Error: "Password is Incorrect",
+//         // });
+//         console.log("not match");
+//       }
+//       data.password = passwordnew;
+//       console.log(data.password);
+
+//       bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(data.password, salt, (err, hash) => {
+//           if (err) throw err;
+
+//           data.password = hash;
+
+//           data.save(function (err, Person) {
+//             if (err) console.log(err);
+//             else console.log("Success");
+//             res.send(Person);
+//           });
+//         });
+//       });
+//     });
+//   });
+// });
+router.post("/changepassword", function (req, res) {
+  const { password, passwordnew, passwordconfirm } = req.body;
 
   console.log(req.user);
   console.log(req.user._id + "id");
 
-  Admin.findById(req.user._id, (err, data) => {
+  User.findById(req.user._id, (err, data) => {
     if (err) {
       console.log(err);
     }
+
     bcrypt.compare(password, data.password, (err, isMatch) => {
-      if (err) {
-        res.send(err);
-      }
+      if (err) throw err;
       if (!isMatch) {
-        // res.send({
-        //   Error: "Password is Incorrect",
-        // });
-        console.log("not match");
-      }
-      data.password = passwordnew;
-      console.log(data.password);
+        res.send({
+          Error: "Password is Incorrect",
+        });
+      } else {
+        data.password = req.body.passwordnew;
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(data.password, salt, (err, hash) => {
-          if (err) throw err;
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(data.password, salt, (err, hash) => {
+            if (err) throw err;
 
-          data.password = hash;
+            data.password = hash;
 
-          data.save(function (err, Person) {
-            if (err) console.log(err);
-            else console.log("Success");
-            res.send(Person);
+            data.save(function (err, Person) {
+              if (err) console.log(err);
+              else console.log("Success");
+              res.redirect("/admin/dashboard");
+            });
           });
         });
-      });
+      }
     });
   });
 });
-
 router.get("/AdminUsersList", async (req, res) => {
   try {
     const postdata = await Admin.find();
