@@ -18,7 +18,7 @@ router.post("/adminusers", async (req, res) => {
   }
 });
 //to login a user
-router.post("/adminlogin", auth1, async (req, res) => {
+router.post("/adminlogin", async (req, res) => {
   try {
     console.log("dwdwwd");
     const user = await Admin.findBylogin(req.body.email, req.body.password);
