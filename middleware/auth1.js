@@ -6,23 +6,23 @@ const auth1 = async (req, res, next) => {
     const token = req.header("Authorization").replace("Bearer ", "");
     const decoded = jwt.verify(token, "secret");
 
-    const adminuser = await Admin.findOne({
+    const user = await Admin.findOne({
       _id: decoded._id,
       "tokens.token": token,
     });
-    console.log(adminuser);
+    console.log(user);
 
     //for admin if there is
     // if(decoded.role === 'admin'){
-    //  adminuser = await AdminSchema.findOne({ _id: decoded._id, 'tokens.token': token })
+    //  user = await AdminSchema.findOne({ _id: decoded._id, 'tokens.token': token })
     // }
 
-    if (!adminuser) {
+    if (!user) {
       throw new Error();
     }
 
     req.token = token;
-    req.adminuser = adminuser;
+    req.user = user;
     next();
   } catch (e) {
     res.status(401).send({ error: "Please authenticate." });
