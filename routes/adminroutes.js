@@ -18,7 +18,7 @@ router.post("/adminusers", async (req, res) => {
   }
 });
 //to login a user
-router.post("/adminlogin", async (req, res) => {
+router.post("/adminlogin", auth1, async (req, res) => {
   try {
     console.log("dwdwwd");
     const user = await Admin.findBylogin(req.body.email, req.body.password);
@@ -30,6 +30,7 @@ router.post("/adminlogin", async (req, res) => {
     res.status(400).send();
   }
 });
+
 //logout
 router.get("/adminlogout", auth1, (req, res) => {
   try {
@@ -127,7 +128,7 @@ router.post("/changepassword", auth1, function (req, res) {
   console.log(req.user);
   console.log(req.user._id + "id");
 
-  User.findById(req.user._id, (err, data) => {
+  Admin.findById(req.user._id, (err, data) => {
     if (err) {
       console.log(err);
     }
