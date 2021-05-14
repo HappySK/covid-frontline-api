@@ -2,7 +2,7 @@ const express = require("express");
 const Resource = require("../models/resource");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const auth1 = require("../middleware/auth1");
+// const auth1 = require("../middleware/auth1");
 const router = express.Router();
 
 router.post("/addresource", (req, res) => {
@@ -72,7 +72,7 @@ router.get("/resources/:query", cors(), (req, res) => {
 
   Resource.find(
     {
-      _id: query,
+      addedby: query,
     },
     (err, result) => {
       if (err) throw err;
