@@ -2,6 +2,7 @@ const express = require("express");
 const SuperAdmin = require("../models/superadmin");
 const auth = require("../middleware/auth");
 const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
+const auth1 = require("../middleware/auth1");
 const router = express.Router();
 //Register
 router.post("/superadminusers", async (req, res) => {
@@ -63,47 +64,43 @@ router.get(
   }
 );
 
-router.post(
-  "/superadminchangepassword",
-  ensureAuthenticated,
-  function (req, res) {
-    const { password, passwordnew } = req.body;
+router.post("/superadminchangepassword", auth, function (req, res) {
+  const { password, passwordnew } = req.body;
 
-    console.log(req.user);
-    console.log(req.user._id + "id");
+  console.log(req.user);
+  console.log(req.user._id + "id");
 
-    SuperAdmin.findById(req.user._id, (err, data) => {
+  SuperAdmin.findById(req.user._id, (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    bcrypt.compare(password, data.password, (err, isMatch) => {
       if (err) {
-        console.log(err);
+        res.send(err);
       }
-      bcrypt.compare(password, data.password, (err, isMatch) => {
-        if (err) {
-          res.send(err);
-        }
-        if (!isMatch) {
-          // res.send({
-          //   Error: "Password is Incorrect",
-          // });
-          console.log("not match");
-        }
-        data.password = passwordnew;
-        console.log(data.password);
+      if (!isMatch) {
+        // res.send({
+        //   Error: "Password is Incorrect",
+        // });
+        console.log("not match");
+      }
+      data.password = passwordnew;
+      console.log(data.password);
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(data.password, salt, (err, hash) => {
-            if (err) throw err;
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(data.password, salt, (err, hash) => {
+          if (err) throw err;
 
-            data.password = hash;
+          data.password = hash;
 
-            data.save(function (err, Person) {
-              if (err) console.log(err);
-              else console.log("Success");
-              res.send(Person);
-            });
+          data.save(function (err, Person) {
+            if (err) console.log(err);
+            else console.log("Success");
+            res.send(Person);
           });
         });
       });
     });
-  }
-);
+  });
+});
 module.exports = router;
