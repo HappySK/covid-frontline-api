@@ -1,7 +1,7 @@
 const express = require("express");
 const SuperAdmin = require("../models/superadmin");
 const auth = require("../middleware/auth");
-const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
+const { ensureAuthenticated } = require("../config/auth");
 const router = express.Router();
 //Register
 router.post("/superadminusers", async (req, res) => {
