@@ -17,6 +17,7 @@ router.post("/superadminusers", async (req, res) => {
   }
 });
 //to login a user
+
 router.post("/superadminlogin", async (req, res) => {
   try {
     console.log("dwdwwd");
@@ -45,6 +46,23 @@ router.get("/superadminlogout", auth, (req, res) => {
   }
 });
 //changepassword
+
+router.get(
+  "/superadminchangepassword",
+  ensureAuthenticated,
+  function (req, res) {
+    SuperAdmin.findById(req.user, (err) => {
+      if (err) {
+        return res.status(401).send();
+      }
+
+      res.render("changepassword", {
+        user: req.user,
+      });
+    });
+  }
+);
+
 router.post(
   "/superadminchangepassword",
   ensureAuthenticated,
