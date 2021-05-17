@@ -2,14 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
+const app = express();
 const path = require("path");
 const SuperAdmin = require("./routes/superadminroutes");
 const Admin = require("./routes/adminroutes");
 const Resource = require("./routes/resourceroutes");
 const City = require("./routes/cityroutes");
 const Country = require("./routes/countryroutes");
-const app = express();
+
 app.use("/public", express.static("public"));
 
 app.use(express.json());
