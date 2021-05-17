@@ -56,7 +56,7 @@ router.get(
         return res.status(401).send();
       }
 
-      res.render("changepassword", {
+      res.render("superadminchangepassword", {
         user: req.user,
       });
     });
