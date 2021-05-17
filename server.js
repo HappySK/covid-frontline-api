@@ -28,6 +28,8 @@ app.use("/resource", Resource);
 app.use("/city", City);
 app.use("/country", Country);
 app.use("/superadminauth", require("./routes/superadmin.js"));
+app.use("/privacypolicy", require("./routes/privacypolicyroutes.js"));
+app.use("/termsofservices", require("./routes/termsofserviceroutes.js"));
 const CONNECTION_URL =
   "mongodb+srv://kalyani:sushma1997@cluster0.9rilk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5050;
