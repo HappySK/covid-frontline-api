@@ -8,15 +8,17 @@ const SuperAdmin = require("../models/superadmin");
 const { forwardAuthenticated } = require("../config/auth");
 
 // Login Page
-router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
+router.get("/superadminlogin", forwardAuthenticated, (req, res) =>
+  res.render("login")
+);
 
 // Register Page
-router.get("/register", forwardAuthenticated, (req, res) =>
-  res.render("register")
+router.get("/superadminusers", forwardAuthenticated, (req, res) =>
+  res.render("superadminusers")
 );
 
 // Register
-router.post("/register", (req, res) => {
+router.post("/superadminusers", (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
 
@@ -44,7 +46,7 @@ router.post("/register", (req, res) => {
     SuperAdmin.findOne({ email: email }).then((user) => {
       if (user) {
         errors.push({ msg: "Email already exists" });
-        res.render("register", {
+        res.render("superadminusers", {
           errors,
           name,
           email,
@@ -69,7 +71,7 @@ router.post("/register", (req, res) => {
                   "success_msg",
                   "You are now registered and can log in"
                 );
-                res.redirect("/adminauth/login");
+                res.redirect("/superadminauth/login");
               })
               .catch((err) => console.log(err));
           });
@@ -80,19 +82,19 @@ router.post("/register", (req, res) => {
 });
 
 // Login
-router.post("/login", (req, res, next) => {
+router.post("/superadminlogin", (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/admin/dashboard",
-    failureRedirect: "/adminauth/login",
+    failureRedirect: "/superadminauth/login",
     failureFlash: true,
   })(req, res, next);
 });
 
 // Logout
-router.get("/logout", (req, res) => {
+router.get("/superadminlogout", (req, res) => {
   req.logout();
   req.flash("success_msg", "You are logged out");
-  res.redirect("/adminauth/login");
+  res.redirect("/superadminauth/login");
 });
 
 module.exports = router;
