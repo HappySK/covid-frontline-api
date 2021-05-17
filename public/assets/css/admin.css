@@ -1,0 +1,415 @@
+body,
+html {
+  height: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+.w-100 {
+  width: 100%;
+}
+.bg-color {
+  background: #002639;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.admin {
+  width: 100%;
+  float: left;
+  height: 100%;
+}
+
+.slidebar-left {
+  width: 260px;
+  position: fixed;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  padding: 0px;
+  background: #3175f7;
+  font-weight: 400;
+}
+
+/* .admin-logo {
+  width: 260px;
+  padding: 15px 20px;
+  border-bottom: solid 1px #6b93de;
+} */
+.admin-logo {
+  width: 260px;
+  padding: 26.5px 20px;
+  border-bottom: solid 1px #6b93de;
+}
+
+.admin-logo img {
+  height: 30px;
+  margin: 15px 0px;
+}
+
+.login-logo {
+  width: 100%;
+  padding: 0px 0px 20px 0px;
+  text-align: center;
+}
+
+.login-logo img {
+  height: 45px;
+}
+
+.admin-menu,
+.admin-menu ul,
+.admin-menu ul li {
+  float: left;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  display: block;
+}
+
+.admin-menu ul li {
+}
+
+.admin-menu ul li:hover {
+  background: #f39510;
+}
+
+.admin-menu ul li.active-menu {
+  background: #f39510;
+}
+
+.admin-menu ul li a {
+  width: 100%;
+  padding: 10px 20px;
+  display: block;
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+}
+.admin-menu ul li a i {
+  padding-right: 10px;
+  width: 30px;
+}
+
+.admin-menu ul li a img {
+  margin-right: 10px;
+  width: 22px;
+}
+
+.admin-wrapper {
+  width: 100%;
+  padding-left: 260px;
+}
+
+.admin-content {
+  float: left;
+  width: 100%;
+}
+
+.admin-head {
+  float: left;
+  width: 100%;
+  padding: 27px;
+  border-bottom: solid 1px #ccc;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+}
+
+.admin-data {
+  float: left;
+  width: 100%;
+  padding: 27px;
+  color: #000;
+}
+
+.admin-table table {
+  width: 100%;
+  float: left;
+}
+
+.admin-table table thead tr th {
+  color: #000;
+  font-size: 15px;
+  font-weight: 600;
+  background: #eaeaea;
+  display: table-cell;
+  vertical-align: inherit;
+  padding: 15px 10px;
+}
+
+.admin-table table tbody tr td {
+  color: #000;
+  font-size: 14px;
+  border-bottom: solid 5px #eaeaea;
+  padding: 15px 10px;
+}
+
+.admin-table table tbody tr td a {
+  color: #147edc;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.admin-table table tbody tr td span.btn {
+  padding: 5px 15px;
+  border-radius: 5px;
+  color: #fff;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 400;
+  background: #f39e1f;
+  margin-right: 15px;
+}
+
+.add-new-btn {
+  float: right;
+  margin-bottom: 20px;
+}
+
+.add-new-btn a {
+  padding: 10px 30px;
+  background: #147edc;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.m-b-20 {
+  margin-bottom: 20px;
+}
+
+.boxed-btn {
+  background: #f39510;
+  padding: 8px 20px;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.boxed-btn:hover {
+  background: #c77604;
+}
+
+.login-box {
+  background: #fff;
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -200px;
+  margin-top: -147px;
+  padding: 30px;
+  -webkit-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000;
+}
+
+.dashboard_box {
+  padding: 50px;
+  font-size: 25px;
+  text-align: center;
+  border-radius: 5px;
+  height: 100%;
+  display: table;
+  width: 100%;
+}
+
+.dashboard_box.bg-color-1 {
+  background: #d6941e;
+  border: dashed 1px #e4bf7d;
+}
+
+.dashboard_box.bg-color-2 {
+  background: #68156d;
+  border: dashed 1px #aa40b1;
+}
+
+.dashboard_box.bg-color-3 {
+  background: #4b4bc5;
+  border: dashed 1px #7f7ff5;
+}
+
+.widget-heading {
+  font-size: 18px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.widget-heading img {
+  width: 60px;
+}
+
+.widget-heading span {
+  font-size: 30px;
+  font-weight: 700;
+  width: 100%;
+  float: left;
+  line-height: 35px;
+  padding-top: 20px;
+}
+.tags-field label {
+  text-align: left;
+  font-weight: 600;
+  padding: 0px;
+  margin: 0px;
+}
+
+.tags-field {
+  margin-bottom: 20px !important;
+}
+
+.collapsible-menu {
+  display: none;
+}
+
+@media (min-width: 320px) and (max-width: 991px) {
+  .slidebar-left {
+    height: auto;
+  }
+
+  .gw-nav-list > li.init-arrow-down:after {
+    top: 18px !important;
+  }
+
+  .collapsible-menu {
+    display: block;
+  }
+
+  .admin-menu {
+    display: none;
+  }
+
+  .admin-head {
+    font-size: 20px;
+    padding: 15px 27px;
+  }
+
+  .collapsible-menu ul li a img {
+    margin-right: 10px;
+    width: 22px;
+  }
+
+  .slidebar-left {
+    width: 100%;
+    position: relative;
+    background: #101b27;
+  }
+
+  .admin-wrapper {
+    width: 100%;
+    padding-left: 0px;
+  }
+
+  .admin-logo {
+    width: 100%;
+    padding: 20px 20px;
+    background: #3175f7;
+  }
+
+  .collapsible-menu {
+    padding: 0px 0px;
+    background: #e94d19;
+    color: #fff;
+  }
+
+  .collapsible-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0px;
+  }
+
+  .collapsible-menu a {
+    display: block;
+    padding: 10px 10px 10px 30px;
+    text-decoration: none;
+    color: #fff;
+    border-bottom: solid 1px #3762b5;
+  }
+
+  .collapsible-menu a i {
+    margin-right: 10px;
+  }
+
+  .collapsible-menu label {
+    display: block;
+    cursor: pointer;
+    padding: 10px 0 5px 30px;
+    background-size: 20px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  .collapsible-menu label::before {
+    content: "\f0c9";
+    display: block;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 1px 10px 0 0;
+    font: normal normal normal 20px/1 FontAwesome;
+  }
+
+  .collapsible-menu input#menu {
+    display: none;
+  }
+
+  .collapsible-menu input:checked + label {
+    padding-left: 30px;
+  }
+
+  .collapsible-menu input:checked + label::before {
+    content: "\f00d";
+    display: block;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 1px 10px 0 0;
+    font: normal normal normal 20px/1 FontAwesome;
+  }
+
+  .menu-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 0 0 0px;
+    background: #3175f7;
+  }
+
+  .collapsible-menu input:checked ~ label {
+    padding-left: 30px;
+  }
+
+  .collapsible-menu input:checked ~ label::before {
+    content: "\f00d";
+    display: block;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 1px 10px 0 0;
+    font: normal normal normal 20px/1 FontAwesome;
+  }
+
+  .collapsible-menu input:checked ~ .menu-content {
+    max-height: 100%;
+  }
+
+  .dashboard {
+    margin-bottom: 30px;
+  }
+
+  .admin-table table thead tr th,
+  .admin-table table tbody tr td {
+    white-space: nowrap;
+  }
+
+  .admin-table.demo table tbody tr:nth-last-child(1) td {
+    white-space: pre-wrap;
+    vertical-align: top;
+  }
+
+  .dashboard_box {
+    padding: 30px;
+  }
+}

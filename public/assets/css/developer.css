@@ -1,0 +1,236 @@
+.bill_scroll1 {
+  height: auto;
+  overflow: auto;
+}
+#page-numbers {
+  list-style: none;
+  display: flex;
+}
+
+#page-numbers > li {
+  margin-right: 0.3em;
+  color: blue;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* .pagination {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pagination a {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #fd8d36;
+  color: #fd8d36;
+} */
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  cursor: pointer;
+}
+
+.pagination a {
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: 1px solid #fd8d36;
+  color: #fd8d36;
+}
+
+.pagination__link {
+  font-weight: bold;
+}
+
+.pagination__link--active a {
+  color: #fff;
+  background: #fd8d36;
+}
+
+.pagination__link--disabled a {
+  color: rgb(198, 197, 202);
+  border: 1px solid rgb(198, 197, 202);
+}
+
+.threedots:after {
+  content: "\2807";
+  font-size: 30px;
+}
+.dropbtn {
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdowncart {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #fd8d36;
+  color: #f9f9f9;
+}
+
+/* Show the dropdown menu on hover */
+.dropdowncart:hover .dropdown-content {
+  display: block;
+}
+
+.activecartnum {
+  background-color: #9d9a9a;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.activecartnumText {
+  padding: 10px 40px;
+}
+
+.kot-table_row_history {
+  float: left;
+  width: 100%;
+
+  border-radius: 7.5px;
+  border: solid 1px #e8e8e8;
+}
+
+.kot-table_row_history.history {
+  position: relative;
+  min-height: 1px;
+  padding: 10px;
+  vertical-align: middle;
+  text-align: right;
+  font-size: 14px;
+  color: #000;
+  font-weight: 500;
+}
+
+.kot-table_row_history .databox {
+  float: left;
+  position: relative;
+  min-height: 1px;
+  padding: 10px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 14px;
+  color: #323c47;
+  line-height: 30px;
+}
+
+.kot-table_row_history .databox.td1 {
+  width: 5%;
+}
+
+.kot-table_row_history .databox.td2 {
+  width: 14%;
+  text-align: left;
+}
+
+.kot-table_row_history .databox.td3 {
+  width: 14%;
+  text-align: left;
+}
+.kot-table_row_history .databox.td4 {
+  width: 14%;
+  text-align: left;
+}
+
+.kot-table_row_history .databox.td5 {
+  width: 14%;
+}
+.kot-table_row_history .databox.td6 {
+  width: 17%;
+}
+
+.kot-table_row_history .databox.td6.small {
+  width: 14% !important;
+}
+
+.kot-table_row_history .databox.td5.big {
+  width: 17% !important;
+}
+
+.kot-table_row_history .databox.td7 {
+  width: 12%;
+}
+
+.kot-table_row_history .databox.td8 {
+  width: 10%;
+}
+
+.btn_print_kot_delete {
+  background: rgb(209, 25, 25);
+  color: #fff;
+  padding: 7.5px 30px;
+}
+
+.btn_print_kot_item-not-available {
+  background: rgb(209, 129, 25);
+  color: #fff;
+  padding: 7.5px 30px;
+}
+.margin {
+  margin-top: 40px;
+}
+.height {
+  height: 200px;
+}
+.paginationstyle {
+  margin-top: 20px;
+}
+
+.gw-nav-list > li .gw-submenu > li > a {
+  display: block;
+  position: relative;
+  padding: 0px 0 4px 55px;
+  margin: 0;
+  text-decoration: none;
+}
+
+.gw-nav-list > li .gw-submenu > li > a:focus {
+  text-decoration: none;
+}
+
+.gw-nav-list > li .gw-submenu > li > a:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: rgba(25, 25, 50, 0.1);
+}
+.gw-nav-list > li > a {
+  display: block;
+  margin-top: 2px;
+  padding: 0px 16px 6px 7px;
+  color: #fff;
+  text-shadow: none !important;
+  font-size: 15px;
+  text-decoration: none;
+}
