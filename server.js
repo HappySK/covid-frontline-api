@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cors = require("cors");
+// const cors = require("cors");
 
 const path = require("path");
 const SuperAdmin = require("./routes/superadminroutes");
@@ -19,7 +19,7 @@ app.use(
     extended: false,
   })
 );
-app.use(cors());
+// app.use(cors());
 app.use(express.static(__dirname + "/public/"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use("/superadmin", SuperAdmin);
