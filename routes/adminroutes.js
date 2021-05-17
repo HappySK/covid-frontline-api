@@ -195,12 +195,21 @@ router.get("/update_adminusers/:id", async (req, res) => {
 });
 router.put("/update_adminusers_patch/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email, password, city, date, tokens } = req.body;
+  const { name, email, password, city, country, date, tokens } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatepost = { name, email, password, city, date, tokens, _id: id };
+  const updatepost = {
+    name,
+    email,
+    password,
+    city,
+    country,
+    date,
+    tokens,
+    _id: id,
+  };
 
   await Admin.findByIdAndUpdate(id, updatepost);
 

@@ -19,6 +19,10 @@ const AdminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  country: {
+    type: String,
+    required: true,
+  },
   status: {
     type: Boolean,
     default: true,
