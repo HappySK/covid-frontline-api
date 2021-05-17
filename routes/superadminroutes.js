@@ -2,7 +2,6 @@ const express = require("express");
 const SuperAdmin = require("../models/superadmin");
 const auth = require("../middleware/auth");
 const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
-const auth1 = require("../middleware/auth1");
 const router = express.Router();
 //Register
 router.post("/superadminusers", async (req, res) => {
@@ -65,7 +64,7 @@ router.get(
 );
 
 router.post("/superadminchangepassword", auth, function (req, res) {
-  const { password, passwordnew } = req.body;
+  const { password, passwordnew, passwordconfirm } = req.body;
 
   console.log(req.user);
   console.log(req.user._id + "id");
