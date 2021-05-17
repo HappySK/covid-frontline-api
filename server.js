@@ -7,6 +7,8 @@ const path = require("path");
 const SuperAdmin = require("./routes/superadminroutes");
 const Admin = require("./routes/adminroutes");
 const Resource = require("./routes/resourceroutes");
+const City = require("./routes/cityroutes");
+const Country = require("./routes/countryroutes");
 const app = express();
 app.use("/public", express.static("public"));
 
@@ -23,6 +25,8 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use("/superadmin", SuperAdmin);
 app.use("/admin", Admin);
 app.use("/resource", Resource);
+app.use("/city", City);
+app.use("/country", Country);
 const CONNECTION_URL =
   "mongodb+srv://kalyani:sushma1997@cluster0.9rilk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5050;
