@@ -6,6 +6,7 @@ const router = express.Router();
 router.post("/addcity", (req, res) => {
   const postdata = new City({
     city: req.body.city,
+    country: req.body.country,
   });
 
   console.log(req.body);
@@ -42,12 +43,12 @@ router.get("/update_city/:id", async (req, res) => {
 });
 router.put("/update_city_patch/:id", async (req, res) => {
   const { id } = req.params;
-  const { city } = req.body;
+  const { city, country } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatepost = { city, _id: id };
+  const updatepost = { city, country, _id: id };
 
   await City.findByIdAndUpdate(id, updatepost);
 
