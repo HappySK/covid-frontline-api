@@ -65,5 +65,25 @@ router.delete("/delete_city/:id", async (req, res) => {
 
   res.json({ message: "Post deleted successfully." });
 });
+router.get("/cityvalues/:query", cors(), (req, res) => {
+  var query = req.params.query;
 
+  City.find(
+    {
+      country: query,
+    },
+    (err, result) => {
+      if (err) throw err;
+      if (result) {
+        res.json(result);
+      } else {
+        res.send(
+          JSON.stringify({
+            error: "Error",
+          })
+        );
+      }
+    }
+  );
+});
 module.exports = router;
