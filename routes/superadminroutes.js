@@ -1,7 +1,5 @@
 const express = require("express");
 const SuperAdmin = require("../models/superadmin");
-const cors = require("cors");
-const mongoose = require("mongoose");
 const auth = require("../middleware/auth");
 const router = express.Router();
 //Register

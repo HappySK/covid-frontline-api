@@ -1,6 +1,5 @@
 const express = require("express");
 const Admin = require("../models/admin");
-const cors = require("cors");
 const mongoose = require("mongoose");
 const auth1 = require("../middleware/auth1");
 const router = express.Router();
