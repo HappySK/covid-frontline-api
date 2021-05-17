@@ -2,7 +2,7 @@ const express = require("express");
 const City = require("../models/city");
 const mongoose = require("mongoose");
 const router = express.Router();
-
+const cors = require("cors");
 router.post("/addcity", (req, res) => {
   const postdata = new City({
     city: req.body.city,
