@@ -2,7 +2,6 @@ const express = require("express");
 const Resource = require("../models/resource");
 const cors = require("cors");
 const mongoose = require("mongoose");
-// const auth1 = require("../middleware/auth1");
 const router = express.Router();
 
 router.post("/addresource", (req, res) => {

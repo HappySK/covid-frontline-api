@@ -1,6 +1,5 @@
 const express = require("express");
 const City = require("../models/city");
-const cors = require("cors");
 const mongoose = require("mongoose");
 const router = express.Router();
 
