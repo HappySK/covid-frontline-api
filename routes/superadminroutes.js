@@ -65,9 +65,10 @@ router.get(
 
 router.post("/superadminchangepassword", auth, function (req, res) {
   const { password, passwordnew, passwordconfirm } = req.body;
-
+  console.log("before");
   console.log(req.user);
-  console.log(req.user._id + "id");
+  console.log("after");
+  // console.log(req.user._id + "id");
 
   SuperAdmin.findById(req.user._id, (err, data) => {
     if (err) {

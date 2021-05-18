@@ -87,4 +87,34 @@ router.get("/resources/:query", cors(), (req, res) => {
     }
   );
 });
+
+router.get("/Inactivate/:id", (req, res) => {
+  Resource.findById(req.params.id, (err, auth) => {
+    auth.status = false;
+
+    auth.save(function (err, user) {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    res.redirect("/resource/allresources");
+  });
+});
+
+router.get("/Activate/:id", (req, res) => {
+  Resource.findById(req.params.id, (err, auth) => {
+    auth.status = true;
+
+    auth.save(function (err, aut) {
+      if (err) {
+        res.send({
+          Success: "Error",
+        });
+      }
+    });
+
+    res.redirect("/resource/allresources");
+  });
+});
 module.exports = router;
