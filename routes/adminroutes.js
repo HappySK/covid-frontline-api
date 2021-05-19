@@ -195,7 +195,7 @@ router.get("/update_adminusers/:id", async (req, res) => {
 });
 router.put("/update_adminusers_patch/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, email, password, city, country, date, tokens } = req.body;
+  const { name, email, city, country, date } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
@@ -203,11 +203,11 @@ router.put("/update_adminusers_patch/:id", async (req, res) => {
   const updatepost = {
     name,
     email,
-    password,
+    // password,
     city,
     country,
     date,
-    tokens,
+    // tokens,
     _id: id,
   };
 

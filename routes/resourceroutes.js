@@ -8,6 +8,7 @@ router.post("/addresource", (req, res) => {
   const postdata = new Resource({
     addedby: req.body.addedby,
     name: req.body.name,
+    status: true,
   });
 
   console.log(req.body);
