@@ -33,6 +33,7 @@ app.use("/termsofservices", require("./routes/termsofserviceroutes.js"));
 app.use("/bloodgroup", require("./routes/bloodgrouproutes.js"));
 app.use("/volunteers", require("./routes/volunteersroutes.js"));
 app.use("/request", require("./routes/requestroutes.js"));
+app.use("/patient", require("./routes/patientroutes.js"));
 
 app.use("/administrator", require("./routes/administratorroutes.js"));
 const CONNECTION_URL =
@@ -46,6 +47,6 @@ mongoose
       console.log(`Server Running on Port: http://localhost:${PORT}`)
     )
   )
-  .catch((error) => console.log(`${error} did not connect`));
+  .catch(error => console.log(`${error} did not connect`));
 
 mongoose.set("useFindAndModify", false);

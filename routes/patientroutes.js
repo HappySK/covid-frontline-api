@@ -1,25 +1,18 @@
 const express = require("express");
-const Request = require("../models/request");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const Patient = require("../models/patient");
 const router = express.Router();
 
-router.post("/addrequest", (req, res) => {
-  const postdata = new Request({
+router.post("/addpatient", (req, res) => {
+  const postdata = new Patient({
     addedby: req.body.addedby,
-    patient_name: req.body.patient_name,
-    patient_mobilenumber: req.body.patient_mobilenumber,
-    patient_requirement: req.body.patient_requirement,
-    patient_stage: req.body.patient_stage,
-    guardian_name: req.body.guardian_name,
-    guardian_mobilenumber: req.body.guardian_mobilenumber,
-
+    requestid: req.body.requestid,
     patient_at: req.body.patient_at,
     current_spo2: req.body.current_spo2,
     patient_location: req.body.patient_location,
     comorbidity_conditions: req.body.comorbidity_conditions,
     Priority: req.body.Priority,
-    status: true,
   });
 
   console.log(req.body);
@@ -33,9 +26,9 @@ router.post("/addrequest", (req, res) => {
   });
 });
 
-router.get("/allrequests", async (req, res) => {
+router.get("/allpatients", async (req, res) => {
   try {
-    const postdata = await Request.find();
+    const postdata = await Patient.find();
 
     res.status(200).json(postdata);
   } catch (error) {
@@ -43,75 +36,62 @@ router.get("/allrequests", async (req, res) => {
   }
 });
 
-router.get("/update_request/:id", async (req, res) => {
+router.get("/update_patient/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const postdata = await Request.findById(id);
+    const postdata = await Patient.findById(id);
 
     res.status(200).json(postdata);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 });
-router.put("/update_request_patch/:id", async (req, res) => {
+router.put("/update_patient_patch/:id", async (req, res) => {
   const { id } = req.params;
   const {
-    patient_name,
-    patient_mobilenumber,
-    patient_requirement,
-    patient_stage,
-    guardian_name,
-    guardian_mobilenumber,
-
+    addedby,
+    requestid,
     patient_at,
     current_spo2,
     patient_location,
     comorbidity_conditions,
     Priority,
-    addedby,
   } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
   const updatepost = {
-    patient_name,
-    patient_mobilenumber,
-    patient_requirement,
-    patient_stage,
-    guardian_name,
-    guardian_mobilenumber,
     addedby,
-
+    requestid,
     patient_at,
     current_spo2,
     patient_location,
     comorbidity_conditions,
     Priority,
-
     _id: id,
   };
 
-  await Request.findByIdAndUpdate(id, updatepost);
+  await Patient.findByIdAndUpdate(id, updatepost);
 
   res.json(updatepost);
 });
 
-router.delete("/delete_request/:id", async (req, res) => {
+router.delete("/delete_patient/:id", async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  await Request.findByIdAndRemove(id);
+  await Patient.findByIdAndRemove(id);
 
   res.json({ message: "Post deleted successfully." });
 });
-router.get("/requests/:query", cors(), (req, res) => {
+router.get("/patients/:query", cors(), (req, res) => {
   var query = req.params.query;
 
-  Request.find(
+  Patient.find(
     {
       addedby: query,
     },
@@ -131,7 +111,7 @@ router.get("/requests/:query", cors(), (req, res) => {
 });
 
 router.get("/Inactivate/:id", (req, res) => {
-  Request.findById(req.params.id, (err, auth) => {
+  Patient.findById(req.params.id, (err, auth) => {
     auth.status = false;
 
     auth.save(function (err, user) {
@@ -140,12 +120,12 @@ router.get("/Inactivate/:id", (req, res) => {
       }
     });
 
-    res.redirect("/request/allrequests");
+    res.redirect("/patient/allpatients");
   });
 });
 
 router.get("/Activate/:id", (req, res) => {
-  Request.findById(req.params.id, (err, auth) => {
+  Patient.findById(req.params.id, (err, auth) => {
     auth.status = true;
 
     auth.save(function (err, aut) {
@@ -156,7 +136,7 @@ router.get("/Activate/:id", (req, res) => {
       }
     });
 
-    res.redirect("/request/allrequests");
+    res.redirect("/patient/allpatients");
   });
 });
 

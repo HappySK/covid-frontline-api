@@ -183,13 +183,14 @@ router.post("/selectedresources/:tid", async (req, res) => {
 //     if (!check) {
 //       res.send("no season found");
 //     }
-//     const index = check.resourcedetail.findIndex(
-//       (x) => x._id === req.params.eid
-//     );
+//     const index = check.resourcedetail.findIndex(x => x._id === req.params.id);
+//     console.log(x, "value");
 //     (check.resourcedetail[index].resourceid = req.body.resourceid),
 //       (check.resourcedetail[index].status = req.body.status);
-
+//     console.log(resourcedetail[0], "resourcedetail[0] value");
+//     console.log(check, "1");
 //     const show = await check.save();
+//     console.log(show, "2");
 //     res.send(show);
 //   } catch (e) {
 //     res.send(e);

@@ -35,6 +35,23 @@ var RequestSchema = new Schema(
       type: Boolean,
       default: true,
     },
+
+    patient_at: {
+      type: String,
+    },
+
+    current_spo2: {
+      type: String,
+    },
+    patient_location: {
+      type: String,
+    },
+    comorbidity_conditions: {
+      type: String,
+    },
+    Priority: {
+      type: String,
+    },
   },
   {
     timestamps: true,
