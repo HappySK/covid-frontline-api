@@ -1,5 +1,6 @@
 const express = require("express");
 const Resource = require("../models/resource");
+const Admin = require("../models/admin");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const router = express.Router();
@@ -118,4 +119,80 @@ router.get("/Activate/:id", (req, res) => {
     res.redirect("/resource/allresources");
   });
 });
+
+// router.get("/Inactivate/:id", (req, res) => {
+//   Admin.findById(req.params.id, (err, auth) => {
+//     auth.status = false;
+
+//     auth.save(function (err, user) {
+//       if (err) {
+//         console.log(err);
+//       }
+//     });
+
+//     res.redirect("/resource/allresources");
+//   });
+// });
+
+// router.get("/Activate/:id", (req, res) => {
+//   Admin.findById(req.params.id, (err, auth) => {
+//     auth.status = true;
+
+//     auth.save(function (err, aut) {
+//       if (err) {
+//         res.send({
+//           Success: "Error",
+//         });
+//       }
+//     });
+
+//     res.redirect("/resource/allresources");
+//   });
+// });
+
+router.post("/selectedresources/:tid", async (req, res) => {
+  try {
+    const id = req.params.tid;
+
+    const check = await Admin.findById(id);
+    if (!check) {
+      console.log(err);
+    }
+    check.resourceid = req.body.Resource;
+    console.log(check.resourceid);
+    const selectresource = await check.save({});
+    res.send(selectresource);
+
+    // const selectedvalue = check.resourcedetail.findIndex(x => {
+    //   x.resourceid;
+    //   console.log(x);
+    // });
+    // console.log(check.resourcedetail[0]);
+    // console.log(selectedvalue);
+    // const value = await check.save();
+    // console.log(value);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// router.post("/selectedresources/:sid", async (req, res) => {
+//   try {
+//     const id = req.params.sid;
+//     const check = await Admin.findById(id);
+//     if (!check) {
+//       res.send("no season found");
+//     }
+//     const index = check.resourcedetail.findIndex(
+//       (x) => x._id === req.params.eid
+//     );
+//     (check.resourcedetail[index].resourceid = req.body.resourceid),
+//       (check.resourcedetail[index].status = req.body.status);
+
+//     const show = await check.save();
+//     res.send(show);
+//   } catch (e) {
+//     res.send(e);
+//   }
+// });
 module.exports = router;

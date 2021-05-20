@@ -1,13 +1,13 @@
 const express = require("express");
-const Admin = require("../models/admin");
 const mongoose = require("mongoose");
-const auth1 = require("../middleware/auth1");
+const administrator = require("../middleware/administrator");
+const Administrator = require("../models/administrator");
 const router = express.Router();
 //Register
-router.post("/adminusers", async (req, res) => {
+router.post("/administratorusers", async (req, res) => {
   //to create a req.
 
-  const value = new Admin(req.body);
+  const value = new Administrator(req.body);
   try {
     await value.save();
     const token = value.generateAuthToken();
@@ -29,10 +29,13 @@ router.post("/adminusers", async (req, res) => {
 //   });
 // });
 //to login a user
-router.post("/adminlogin", async (req, res) => {
+router.post("/administratorlogin", async (req, res) => {
   try {
     console.log("dwdwwd");
-    const user = await Admin.findBylogin(req.body.email, req.body.password);
+    const user = await Administrator.findBylogin(
+      req.body.email,
+      req.body.password
+    );
     console.log(user);
     const token = await user.generateAuthToken(); //this method generates a token for login users
     res.json({ user, token });
@@ -43,7 +46,7 @@ router.post("/adminlogin", async (req, res) => {
 });
 
 //logout
-router.get("/adminlogout", auth1, (req, res) => {
+router.get("/administratorlogout", administrator, (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token;
@@ -133,48 +136,48 @@ router.get("/adminlogout", auth1, (req, res) => {
 //   });
 // });
 
-router.post("/changepassword", auth1, function (req, res) {
-  const { password, passwordnew, passwordconfirm } = req.body;
+// router.post("/changepassword", auth1, function (req, res) {
+//   const { password, passwordnew, passwordconfirm } = req.body;
 
-  console.log(req.user);
-  console.log(req.user._id + "id");
+//   console.log(req.user);
+//   console.log(req.user._id + "id");
 
-  Admin.findById(req.user._id, (err, data) => {
-    if (err) {
-      console.log(err);
-    }
-    bcrypt.compare(password, data.password, (err, isMatch) => {
-      if (err) {
-        res.send(err);
-      }
-      if (!isMatch) {
-        // res.send({
-        //   Error: "Password is Incorrect",
-        // });
-        console.log("not match");
-      }
-      data.password = passwordnew;
-      console.log(data.password);
+//   Admin.findById(req.user._id, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     bcrypt.compare(password, data.password, (err, isMatch) => {
+//       if (err) {
+//         res.send(err);
+//       }
+//       if (!isMatch) {
+//         // res.send({
+//         //   Error: "Password is Incorrect",
+//         // });
+//         console.log("not match");
+//       }
+//       data.password = passwordnew;
+//       console.log(data.password);
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(data.password, salt, (err, hash) => {
-          if (err) throw err;
+//       bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(data.password, salt, (err, hash) => {
+//           if (err) throw err;
 
-          data.password = hash;
+//           data.password = hash;
 
-          data.save(function (err, Person) {
-            if (err) console.log(err);
-            else console.log("Success");
-            res.send(Person);
-          });
-        });
-      });
-    });
-  });
-});
-router.get("/AdminUsersList", async (req, res) => {
+//           data.save(function (err, Person) {
+//             if (err) console.log(err);
+//             else console.log("Success");
+//             res.send(Person);
+//           });
+//         });
+//       });
+//     });
+//   });
+// });
+router.get("/administratorUsersList", async (req, res) => {
   try {
-    const postdata = await Admin.find();
+    const postdata = await Administrator.find();
 
     res.status(200).json(postdata);
   } catch (error) {
@@ -182,18 +185,18 @@ router.get("/AdminUsersList", async (req, res) => {
   }
 });
 
-router.get("/update_adminusers/:id", async (req, res) => {
+router.get("/update_administratorusers/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const postdata = await Admin.findById(id);
+    const postdata = await Administrator.findById(id);
 
     res.status(200).json(postdata);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 });
-router.put("/update_adminusers_patch/:id", async (req, res) => {
+router.put("/update_administratorusers_patch/:id", async (req, res) => {
   const { id } = req.params;
   const { name, email, city, country, date } = req.body;
 
@@ -211,24 +214,24 @@ router.put("/update_adminusers_patch/:id", async (req, res) => {
     _id: id,
   };
 
-  await Admin.findByIdAndUpdate(id, updatepost);
+  await Administrator.findByIdAndUpdate(id, updatepost);
 
   res.json(updatepost);
 });
 
-router.delete("/delete_adminusers/:id", async (req, res) => {
+router.delete("/delete_administratorusers/:id", async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  await Admin.findByIdAndRemove(id);
+  await Administrator.findByIdAndRemove(id);
 
   res.json({ message: "Post deleted successfully." });
 });
 
 router.get("/suspenduser/:id", (req, res) => {
-  Admin.findById(req.params.id, (err, auth) => {
+  Administrator.findById(req.params.id, (err, auth) => {
     auth.status = false;
 
     auth.save(function (err, user) {
@@ -237,12 +240,12 @@ router.get("/suspenduser/:id", (req, res) => {
       }
     });
 
-    res.redirect("/admin/AdminUsersList");
+    res.redirect("/administrator/AdministratorUsersList");
   });
 });
 
 router.get("/makeliveuser/:id", (req, res) => {
-  Admin.findById(req.params.id, (err, auth) => {
+  Administrator.findById(req.params.id, (err, auth) => {
     auth.status = true;
 
     auth.save(function (err, aut) {
@@ -253,8 +256,7 @@ router.get("/makeliveuser/:id", (req, res) => {
       }
     });
 
-    res.redirect("/admin/AdminUsersList");
+    res.redirect("/administrator/AdministratorUsersList");
   });
 });
-
 module.exports = router;

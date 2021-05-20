@@ -32,6 +32,9 @@ app.use("/privacypolicy", require("./routes/privacypolicyroutes.js"));
 app.use("/termsofservices", require("./routes/termsofserviceroutes.js"));
 app.use("/bloodgroup", require("./routes/bloodgrouproutes.js"));
 app.use("/volunteers", require("./routes/volunteersroutes.js"));
+app.use("/request", require("./routes/requestroutes.js"));
+
+app.use("/administrator", require("./routes/administratorroutes.js"));
 const CONNECTION_URL =
   "mongodb+srv://kalyani:sushma1997@cluster0.9rilk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5050;

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const AdminSchema = new mongoose.Schema({
+const AdministratorSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -27,28 +27,27 @@ const AdminSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-
-  resourceid: [
+  resourcedetail: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Resource",
+      name: {
+        type: String,
+      },
+
+      resourceid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Resource",
+      },
+      status: {
+        type: Boolean,
+      },
     },
   ],
-  // resourcedetail: [
-  //   {
-  //     resourceid: {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: "Resource",
-  //     },
-  //     status: {
-  //       type: Boolean,
-  //     },
-  //   },
-  // ],
+
   date: {
     type: Date,
     default: Date.now,
   },
+
   tokens: [
     {
       token: {
@@ -59,7 +58,7 @@ const AdminSchema = new mongoose.Schema({
 });
 
 //for hiding sensitive data like password and token from response send back to user
-AdminSchema.methods.toJSON = function () {
+AdministratorSchema.methods.toJSON = function () {
   const user = this;
   const userobj = user.toObject();
 
@@ -69,7 +68,7 @@ AdminSchema.methods.toJSON = function () {
   return userobj;
 };
 //generating jwt token(authentication) for login/signup
-AdminSchema.methods.generateAuthToken = async function () {
+AdministratorSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, "secret");
   user.tokens = user.tokens.concat({ token });
@@ -78,8 +77,8 @@ AdminSchema.methods.generateAuthToken = async function () {
   return token;
 };
 //login user
-AdminSchema.statics.findBylogin = async (email, password) => {
-  const user = await Admin.findOne({ email });
+AdministratorSchema.statics.findBylogin = async (email, password) => {
+  const user = await Administrator.findOne({ email });
   if (!user) {
     throw new Error("unable to login");
   }
@@ -91,7 +90,7 @@ AdminSchema.statics.findBylogin = async (email, password) => {
 };
 
 //for converting plain pass to hashed one
-AdminSchema.pre("save", async function (next) {
+AdministratorSchema.pre("save", async function (next) {
   const user = this;
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
@@ -100,6 +99,6 @@ AdminSchema.pre("save", async function (next) {
   next();
 });
 
-const Admin = mongoose.model("Admin", AdminSchema);
+const Administrator = mongoose.model("Administrator", AdministratorSchema);
 
-module.exports = Admin;
+module.exports = Administrator;
