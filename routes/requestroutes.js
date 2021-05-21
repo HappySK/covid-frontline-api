@@ -20,6 +20,7 @@ router.post("/addrequest", (req, res) => {
     patient_location: req.body.patient_location,
     comorbidity_conditions: req.body.comorbidity_conditions,
     Priority: req.body.Priority,
+    comments1: req.body.comments1,
     status: true,
   });
 
@@ -71,6 +72,7 @@ router.put("/update_request_patch/:id", async (req, res) => {
     patient_location,
     comorbidity_conditions,
     Priority,
+    comments1,
     addedby,
   } = req.body;
 
@@ -92,6 +94,7 @@ router.put("/update_request_patch/:id", async (req, res) => {
     patient_location,
     comorbidity_conditions,
     Priority,
+    comments1,
 
     _id: id,
   };

@@ -55,6 +55,9 @@ var RequestSchema = new Schema(
     Priority: {
       type: String,
     },
+    comments1: {
+      type: String,
+    },
   },
   {
     timestamps: true,
