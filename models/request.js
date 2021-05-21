@@ -31,6 +31,9 @@ var RequestSchema = new Schema(
       type: Number,
       required: true,
     },
+    comments: {
+      type: String,
+    },
     status: {
       type: Boolean,
       default: true,

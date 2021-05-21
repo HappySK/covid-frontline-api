@@ -13,6 +13,7 @@ router.post("/addrequest", (req, res) => {
     patient_stage: req.body.patient_stage,
     guardian_name: req.body.guardian_name,
     guardian_mobilenumber: req.body.guardian_mobilenumber,
+    comments: req.body.comments,
 
     patient_at: req.body.patient_at,
     current_spo2: req.body.current_spo2,
@@ -63,6 +64,7 @@ router.put("/update_request_patch/:id", async (req, res) => {
     patient_stage,
     guardian_name,
     guardian_mobilenumber,
+    comments,
 
     patient_at,
     current_spo2,
@@ -82,6 +84,7 @@ router.put("/update_request_patch/:id", async (req, res) => {
     patient_stage,
     guardian_name,
     guardian_mobilenumber,
+    comments,
     addedby,
 
     patient_at,
