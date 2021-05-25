@@ -1,5 +1,6 @@
 const express = require("express");
 const SuperAdmin = require("../models/superadmin");
+const bcrypt = require("bcryptjs");
 const auth = require("../middleware/auth");
 const { ensureAuthenticated } = require("../config/auth");
 const router = express.Router();
@@ -36,7 +37,7 @@ router.post("/superadminlogin", async (req, res) => {
 //logout
 router.get("/superadminlogout", auth, (req, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter((token) => {
+    req.user.tokens = req.user.tokens.filter(token => {
       return token.token !== req.token;
     });
     req.user.save();
@@ -47,28 +48,107 @@ router.get("/superadminlogout", auth, (req, res) => {
 });
 //changepassword
 
-router.get(
-  "/superadminchangepassword",
-  ensureAuthenticated,
-  function (req, res) {
-    SuperAdmin.findById(req.user, (err) => {
-      if (err) {
-        return res.status(401).send();
-      }
+// router.get(
+//   "/superadminchangepassword",
+//   ensureAuthenticated,
+//   function (req, res) {
+//     SuperAdmin.findById(req.user, err => {
+//       if (err) {
+//         return res.status(401).send();
+//       }
 
-      res.render("superadminchangepassword", {
-        user: req.user,
-      });
-    });
-  }
-);
+//       res.render("superadminchangepassword", {
+//         user: req.user,
+//       });
+//     });
+//   }
+// );
+
+// router.post("/superadminchangepassword", auth, function (req, res) {
+//   const { password, passwordnew, passwordconfirm } = req.body;
+//   console.log("before");
+//   console.log(req.user);
+//   console.log("after");
+//   // console.log(req.user._id + "id");
+
+//   SuperAdmin.findById(req.user._id, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     bcrypt.compare(password, data.password, (err, isMatch) => {
+//       if (err) {
+//         res.send(err);
+//       }
+//       if (!isMatch) {
+//         // res.send({
+//         //   Error: "Password is Incorrect",
+//         // });
+//         console.log("not match");
+//       }
+//       data.password = passwordnew;
+//       console.log(data.password);
+
+//       bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(data.password, salt, (err, hash) => {
+//           if (err) throw err;
+
+//           data.password = hash;
+
+//           data.save(function (err, Person) {
+//             if (err) console.log(err);
+//             else console.log("Success");
+//             res.send(Person);
+//           });
+//         });
+//       });
+//     });
+//   });
+// });
+// router.post("/superadminchangepassword", auth, function (req, res) {
+//   const { password, passwordnew, passwordconfirm } = req.body;
+
+//   console.log(req.user);
+//   console.log(req.user._id + "id");
+
+//   SuperAdmin.findById(req.user._id, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     bcrypt.compare(password, data.password, (err, isMatch) => {
+//       if (err) {
+//         res.send(err);
+//       }
+//       if (!isMatch) {
+//         // res.send({
+//         //   Error: "Password is Incorrect",
+//         // });
+//         console.log("not match");
+//       }
+//       data.password = passwordnew;
+//       console.log(data.password);
+
+//       bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(data.password, salt, (err, hash) => {
+//           if (err) throw err;
+
+//           data.password = hash;
+
+//           data.save(function (err, Person) {
+//             if (err) console.log(err);
+//             else console.log("Success");
+//             res.send(Person);
+//           });
+//         });
+//       });
+//     });
+//   });
+// });
 
 router.post("/superadminchangepassword", auth, function (req, res) {
   const { password, passwordnew, passwordconfirm } = req.body;
-  console.log("before");
+
   console.log(req.user);
-  console.log("after");
-  // console.log(req.user._id + "id");
+  console.log(req.user._id + "id");
 
   SuperAdmin.findById(req.user._id, (err, data) => {
     if (err) {

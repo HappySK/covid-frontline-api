@@ -51,7 +51,7 @@ SuperAdminSchema.methods.generateAuthToken = async function () {
 SuperAdminSchema.statics.findBylogin = async (email, password) => {
   const user = await SuperAdmin.findOne({ email });
   if (!user) {
-    throw new Error("unable to login");
+    throw new Error("user unable to login");
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
