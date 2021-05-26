@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/addnote", (req, res) => {
   const postdata = new Note({
     addedby: req.body.addedby,
+    addedname:req.body.addedname,
     patientid: req.body.patientid,
     note: req.body.note,
   });
@@ -46,12 +47,12 @@ router.get("/update_note/:id", async (req, res) => {
 });
 router.put("/update_note_patch/:id", async (req, res) => {
   const { id } = req.params;
-  const { addedby, patientid, note } = req.body;
+  const { addedby,addedname, patientid, note } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatepost = { addedby, patientid, note, _id: id };
+  const updatepost = { addedby,addedname, patientid, note, _id: id };
 
   await Note.findByIdAndUpdate(id, updatepost);
 

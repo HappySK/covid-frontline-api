@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.post("/addrequest", (req, res) => {
   const postdata = new Request({
+    
+    adminid: req.body.adminid,
     addedby: req.body.addedby,
     patient_name: req.body.patient_name,
     patient_mobilenumber: req.body.patient_mobilenumber,
@@ -14,6 +16,8 @@ router.post("/addrequest", (req, res) => {
     guardian_name: req.body.guardian_name,
     guardian_mobilenumber: req.body.guardian_mobilenumber,
     comments: req.body.comments,
+     adddedname:req.body.adddedname,
+    verifiedname:req.body.verifiedname,
 
     patient_at: req.body.patient_at,
     current_spo2: req.body.current_spo2,
@@ -74,6 +78,9 @@ router.put("/update_request_patch/:id", async (req, res) => {
     Priority,
     comments1,
     addedby,
+    adminid,
+    adddedname,
+    verifiedname,
   } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -88,6 +95,7 @@ router.put("/update_request_patch/:id", async (req, res) => {
     guardian_mobilenumber,
     comments,
     addedby,
+    adminid,
 
     patient_at,
     current_spo2,
@@ -95,6 +103,8 @@ router.put("/update_request_patch/:id", async (req, res) => {
     comorbidity_conditions,
     Priority,
     comments1,
+     adddedname,
+    verifiedname,
 
     _id: id,
   };
@@ -119,7 +129,7 @@ router.get("/requests/:query", cors(), (req, res) => {
 
   Request.find(
     {
-      addedby: query,
+      adminid: query,
     },
     (err, result) => {
       if (err) throw err;

@@ -3,6 +3,19 @@ var Schema = mongoose.Schema;
 
 var RequestSchema = new Schema(
   {
+
+      adminid: {
+      type: String,
+     required: true,
+    },
+     adddedname: {
+      type: String,
+     required: true,
+    },
+     verifiedname: {
+      type: String,
+    },
+
     addedby: {
       type: String,
       required: true,

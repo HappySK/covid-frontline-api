@@ -7,6 +7,10 @@ var NoteSchema = new Schema(
       type: String,
       required: true,
     },
+  addedname: {
+      type: String,
+      required: true,
+    },
     patientid: {
       type: String,
       required: true,
