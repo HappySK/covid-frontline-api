@@ -5,14 +5,6 @@ const MenuSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
-//  addedbyid: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "SuperAdmin",
-//   },
   addedby:{
     type: String,
     required: true,

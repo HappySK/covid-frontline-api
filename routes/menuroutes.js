@@ -7,7 +7,6 @@ const router = express.Router();
 router.post("/add_menu", (req, res) => {
   const postdata = new Menu({
     menu: req.body.menu,
-    description: req.body.description,
     addedby:req.body.addedby,
   });
 
@@ -45,12 +44,12 @@ router.get("/update_menu/:id", async (req, res) => {
 });
 router.put("/update_menu_patch/:id", async (req, res) => {
   const { id } = req.params;
-  const { menu, description,addedby} = req.body;
+  const { menu,addedby} = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatepost = { menu, description,addedby, _id: id };
+  const updatepost = { menu,addedby, _id: id };
 
   await Menu.findByIdAndUpdate(id, updatepost);
 
