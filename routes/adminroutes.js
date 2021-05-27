@@ -1,5 +1,6 @@
 const express = require("express");
 const Admin = require("../models/admin");
+const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const auth1 = require("../middleware/auth1");
 const router = express.Router();
@@ -133,45 +134,33 @@ router.get("/adminlogout", auth1, (req, res) => {
 //   });
 // });
 
-router.post("/changepassword", auth1, function (req, res) {
-  const { password, passwordnew, passwordconfirm } = req.body;
+router.post('/adminchangepassword',auth1, async(req,res) => {
+  try{
+    const {password , newpassword} = req.body;
 
-  console.log(req.user);
-  console.log(req.user._id + "id");
+    console.log(req.user._id);
 
-  Admin.findById(req.user._id, (err, data) => {
-    if (err) {
-      console.log(err);
+    const data = await Admin.findById(req.user._id)
+    if(!data){
+      res.send('no user found')
     }
-    bcrypt.compare(password, data.password, (err, isMatch) => {
-      if (err) {
-        res.send(err);
-      }
-      if (!isMatch) {
-        // res.send({
-        //   Error: "Password is Incorrect",
-        // });
-        console.log("not match");
-      }
-      data.password = passwordnew;
-      console.log(data.password);
+    console.log(data.password);
+    console.log(password);
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(data.password, salt, (err, hash) => {
-          if (err) throw err;
 
-          data.password = hash;
+    const pasaa = await bcrypt.compare(password, data.password)
+    //  data.password = newpassword
+    console.log(pasaa);
 
-          data.save(function (err, Person) {
-            if (err) console.log(err);
-            else console.log("Success");
-            res.send(Person);
-          });
-        });
-      });
-    });
-  });
-});
+        const hashed = await bcrypt.hash(newpassword, 8)
+        
+      const update = await Admin.findByIdAndUpdate(req.user._id,{password: hashed},{new:true})
+      console.log(update);
+  }catch(e){
+    console.log(e);
+    res.send(e)
+  }
+})
 router.get("/AdminUsersList", async (req, res) => {
   try {
     const postdata = await Admin.find();

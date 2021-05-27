@@ -1,5 +1,6 @@
 const express = require("express");
 const Volunteers = require("../models/volunteers");
+const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const auth2 = require("../middleware/auth2");
@@ -79,64 +80,33 @@ router.get("/volunteers/:query", cors(), (req, res) => {
     }
   );
 });
-// //changepassword
+router.post('/volunteerchangepassword',auth2, async(req,res) => {
+  try{
+    const {password , newpassword} = req.body;
 
-// router.get(
-//   "/volunteerschangepassword",
-//   ensureAuthenticated,
-//   function (req, res) {
-//     Volunteers.findById(req.user, (err) => {
-//       if (err) {
-//         return res.status(401).send();
-//       }
+    console.log(req.user._id);
 
-//       res.render("superadminchangepassword", {
-//         user: req.user,
-//       });
-//     });
-//   }
-// );
+    const data = await Volunteers.findById(req.user._id)
+    if(!data){
+      res.send('no user found')
+    }
+    console.log(data.password);
+    console.log(password);
 
-// router.post("/volunteerschangepassword", auth, function (req, res) {
-//   const { password, passwordnew, passwordconfirm } = req.body;
-//   console.log("before");
-//   console.log(req.user);
-//   console.log("after");
-//   // console.log(req.user._id + "id");
 
-//   Volunteers.findById(req.user._id, (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     }
-//     bcrypt.compare(password, data.password, (err, isMatch) => {
-//       if (err) {
-//         res.send(err);
-//       }
-//       if (!isMatch) {
-//         // res.send({
-//         //   Error: "Password is Incorrect",
-//         // });
-//         console.log("not match");
-//       }
-//       data.password = passwordnew;
-//       console.log(data.password);
+    const pasaa = await bcrypt.compare(password, data.password)
+    //  data.password = newpassword
+    console.log(pasaa);
 
-//       bcrypt.genSalt(10, (err, salt) => {
-//         bcrypt.hash(data.password, salt, (err, hash) => {
-//           if (err) throw err;
-
-//           data.password = hash;
-
-//           data.save(function (err, Person) {
-//             if (err) console.log(err);
-//             else console.log("Success");
-//             res.send(Person);
-//           });
-//         });
-//       });
-//     });
-//   });
-// });
+        const hashed = await bcrypt.hash(newpassword, 8)
+        
+      const update = await Volunteers.findByIdAndUpdate(req.user._id,{password: hashed},{new:true})
+      console.log(update);
+  }catch(e){
+    console.log(e);
+    res.send(e)
+  }
+})
 
 router.get("/suspenduser/:id", (req, res) => {
   Volunteers.findById(req.params.id, (err, auth) => {

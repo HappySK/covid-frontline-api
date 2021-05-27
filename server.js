@@ -35,6 +35,7 @@ app.use("/volunteers", require("./routes/volunteersroutes.js"));
 app.use("/request", require("./routes/requestroutes.js"));
 app.use("/patient", require("./routes/patientroutes.js"));
 app.use("/note", require("./routes/noteroutes.js"));
+app.use("/menu", require("./routes/menuroutes.js"));
 
 app.use("/administrator", require("./routes/administratorroutes.js"));
 const CONNECTION_URL =
