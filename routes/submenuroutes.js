@@ -88,6 +88,28 @@ router.get("/submenuvalues/:query", cors(), (req, res) => {
     }
   );
 });
+router.get("/submenuvalues1/:query", cors(), (req, res) => {
+  var query = req.params.query;
+
+  SubMenu.find(
+    {
+      menu: query,
+    },
+    (err, result) => {
+      if (err) throw err;
+      if (result) {
+        res.json(result);
+      } else {
+        res.send(
+          JSON.stringify({
+            error: "Error",
+          })
+        );
+      }
+    }
+  );
+});
+
 
 
 module.exports = router;
