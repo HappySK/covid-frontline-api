@@ -15,7 +15,7 @@ const PageSchema = new mongoose.Schema({
   },
   selectoption: {
     type: String,
-    required: true,
+   
   },
 
    addedby: {
