@@ -88,5 +88,14 @@ router.get("/menuvalues/:query", cors(), (req, res) => {
   );
 });
 
+router.get("/getmenudescription/:menu", cors(), async (req, res) => {
+  var menu = req.params;
+  try {
+    const Menu1 = await Menu.findOne(menu);
 
+    res.status(200).json(Menu1);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
 module.exports = router;

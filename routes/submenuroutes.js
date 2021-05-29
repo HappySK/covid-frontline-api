@@ -110,6 +110,15 @@ router.get("/submenuvalues1/:query", cors(), (req, res) => {
   );
 });
 
+router.get("/getsubmenudescription/:submenu", cors(), async (req, res) => {
+  var submenu = req.params;
+  try {
+    const Menu1 = await SubMenu.findOne(submenu);
 
+    res.status(200).json(Menu1);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
 
 module.exports = router;
