@@ -98,4 +98,17 @@ router.get("/getmenudescription/:menu", cors(), async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 });
+
+
+router.get("/menuvalidation/:query", cors(), async (req, res) => {
+var query = req.params.query;
+  Menu.count({ menu: query }, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 module.exports = router;
+

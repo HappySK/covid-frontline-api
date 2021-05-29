@@ -121,4 +121,15 @@ router.get("/getsubmenudescription/:submenu", cors(), async (req, res) => {
   }
 });
 
+router.get("/submenuvalidation/:query", cors(), async (req, res) => {
+var query = req.params.query;
+  SubMenu.count({ submenu: query }, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
+
 module.exports = router;
