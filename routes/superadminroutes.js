@@ -6,45 +6,45 @@ const { ensureAuthenticated } = require("../config/auth");
 const router = express.Router();
 //Register
 router.post("/superadminusers", async (req, res) => {
-  //to create a req.
+	//to create a req.
 
-  const value = new SuperAdmin(req.body);
-  try {
-    await value.save();
-    const token = value.generateAuthToken();
-    res.status(201).send({ value, token });
-  } catch (e) {
-    res.status(500).send(e);
-  }
+	const value = new SuperAdmin(req.body);
+	try {
+		await value.save();
+		const token = value.generateAuthToken();
+		res.status(201).send({ value, token });
+	} catch (e) {
+		res.status(500).send(e);
+	}
 });
 //to login a user
 
 router.post("/superadminlogin", async (req, res) => {
-  try {
-    console.log("dwdwwd");
-    const user = await SuperAdmin.findBylogin(
-      req.body.email,
-      req.body.password
-    );
-    console.log(user);
-    const token = await user.generateAuthToken(); //this method generates a token for login users
-    res.json({ user, token });
-  } catch (e) {
-    console.log(e);
-    res.status(400).send();
-  }
+	try {
+		console.log("dwdwwd");
+		const user = await SuperAdmin.findBylogin(
+			req.body.email,
+			req.body.password
+		);
+		console.log(user);
+		const token = await user.generateAuthToken(); //this method generates a token for login users
+		res.json({ user, token });
+	} catch (e) {
+		console.log(e);
+		res.status(400).send();
+	}
 });
 //logout
 router.get("/superadminlogout", auth, (req, res) => {
-  try {
-    req.user.tokens = req.user.tokens.filter(token => {
-      return token.token !== req.token;
-    });
-    req.user.save();
-    res.send("logout successful");
-  } catch (e) {
-    res.status(401).send(e);
-  }
+	try {
+		req.user.tokens = req.user.tokens.filter((token) => {
+			return token.token !== req.token;
+		});
+		req.user.save();
+		res.send("logout successful");
+	} catch (e) {
+		res.status(401).send(e);
+	}
 });
 //changepassword
 
@@ -184,31 +184,34 @@ router.get("/superadminlogout", auth, (req, res) => {
 //   });
 // });
 
-router.post('/superadminchangepassword',auth, async(req,res) => {
-  try{
-    const {password , newpassword} = req.body;
+router.post("/superadminchangepassword", auth, async (req, res) => {
+	try {
+		const { password, newpassword } = req.body;
 
-    console.log(req.user._id);
+		console.log(req.user._id);
 
-    const data = await SuperAdmin.findById(req.user._id)
-    if(!data){
-      res.send('no user found')
-    }
-    console.log(data.password);
-    console.log(password);
+		const data = await SuperAdmin.findById(req.user._id);
+		if (!data) {
+			res.send("no user found");
+		}
+		console.log(data.password);
+		console.log(password);
 
+		const pasaa = await bcrypt.compare(password, data.password);
+		//  data.password = newpassword
+		console.log(pasaa);
 
-    const pasaa = await bcrypt.compare(password, data.password)
-    //  data.password = newpassword
-    console.log(pasaa);
+		const hashed = await bcrypt.hash(newpassword, 8);
 
-        const hashed = await bcrypt.hash(newpassword, 8)
-        
-      const update = await SuperAdmin.findByIdAndUpdate(req.user._id,{password: hashed},{new:true})
-      console.log(update);
-  }catch(e){
-    console.log(e);
-    res.send(e)
-  }
-})
+		const update = await SuperAdmin.findByIdAndUpdate(
+			req.user._id,
+			{ password: hashed },
+			{ new: true }
+		);
+		console.log(update);
+	} catch (e) {
+		console.log(e);
+		res.send(e);
+	}
+});
 module.exports = router;
