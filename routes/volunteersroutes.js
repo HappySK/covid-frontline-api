@@ -82,20 +82,21 @@ router.get("/volunteers/:query", cors(), (req, res) => {
 });
 router.post("/volunteerchangepassword", auth2, async (req, res) => {
 	try {
-		const { password, newpassword } = req.body;
+		const { userid, password, newpassword } = req.body;
 
-		console.log(req.user._id);
+		console.log(userid);
 
-		const data = await Volunteers.findById(req.user._id);
+		const data = await Volunteers.findById(userid);
 		if (!data) {
 			res.send("no user found");
 		}
 		console.log(data.password);
 		console.log(password);
 
-		const pasaa = await bcrypt.compare(password, data.password);
+		const isPasswordCorrect = await bcrypt.compare(password, data.password);
 		//  data.password = newpassword
-		console.log(pasaa);
+		if (!isPasswordCorrect)
+			return res.json({ success: false, message: "Incorrect Old Password" });
 
 		const hashed = await bcrypt.hash(newpassword, 8);
 

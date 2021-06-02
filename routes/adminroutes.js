@@ -147,9 +147,10 @@ router.post("/adminchangepassword", auth1, async (req, res) => {
 		console.log(data.password);
 		console.log(password);
 
-		const pasaa = await bcrypt.compare(password, data.password);
+		const isPasswordCorrect = await bcrypt.compare(password, data.password);
 		//  data.password = newpassword
-		console.log(pasaa);
+		if (!isPasswordCorrect)
+			return res.json({ success: false, message: "Incorrect Old Password" });
 
 		const hashed = await bcrypt.hash(newpassword, 8);
 
