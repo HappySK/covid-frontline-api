@@ -15,9 +15,9 @@ app.use("/public", express.static("public"));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  })
+	bodyParser.urlencoded({
+		extended: false,
+	})
 );
 app.use(cors());
 app.use(express.static(__dirname + "/public/"));
@@ -41,16 +41,16 @@ app.use("/page", require("./routes/pageroutes.js"));
 
 app.use("/administrator", require("./routes/administratorroutes.js"));
 const CONNECTION_URL =
-  "mongodb+srv://kalyani:sushma1997@cluster0.9rilk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+	"mongodb+srv://kalyani:sushma1997@cluster0.9rilk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5050;
 
 mongoose
-  .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() =>
-    app.listen(PORT, () =>
-      console.log(`Server Running on Port: http://localhost:${PORT}`)
-    )
-  )
-  .catch(error => console.log(`${error} did not connect`));
+	.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+	.then(() =>
+		app.listen(PORT, () =>
+			console.log(`Server Running on Port: http://localhost:${PORT}`)
+		)
+	)
+	.catch((error) => console.log(`${error} did not connect`));
 
 mongoose.set("useFindAndModify", false);

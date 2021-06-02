@@ -186,9 +186,9 @@ router.get("/superadminlogout", auth, (req, res) => {
 
 router.post("/superadminchangepassword", auth, async (req, res) => {
 	try {
-		const { password, newpassword } = req.body;
+		const { password, newpassword, userid } = req.body;
 
-		console.log(req.user._id);
+		console.log(userid);
 
 		const data = await SuperAdmin.findById(req.user._id);
 		if (!data) {
@@ -204,11 +204,14 @@ router.post("/superadminchangepassword", auth, async (req, res) => {
 		const hashed = await bcrypt.hash(newpassword, 8);
 
 		const update = await SuperAdmin.findByIdAndUpdate(
-			req.user._id,
-			{ password: hashed },
+			userid,
+			{ isFirstLogin: false, password: hashed },
 			{ new: true }
 		);
 		console.log(update);
+		res
+			.status(200)
+			.json({ success: true, message: "Password successfully reset" });
 	} catch (e) {
 		console.log(e);
 		res.send(e);

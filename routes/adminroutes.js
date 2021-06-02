@@ -6,16 +6,16 @@ const auth1 = require("../middleware/auth1");
 const router = express.Router();
 //Register
 router.post("/adminusers", async (req, res) => {
-  //to create a req.
+	//to create a req.
 
-  const value = new Admin(req.body);
-  try {
-    await value.save();
-    const token = value.generateAuthToken();
-    res.status(201).send({ value, token });
-  } catch (e) {
-    res.status(500).send(e);
-  }
+	const value = new Admin(req.body);
+	try {
+		await value.save();
+		const token = value.generateAuthToken();
+		res.status(201).send({ value, token });
+	} catch (e) {
+		res.status(500).send(e);
+	}
 });
 
 // router.put("/adminusers/city", async (user, cb) => {
@@ -31,29 +31,29 @@ router.post("/adminusers", async (req, res) => {
 // });
 //to login a user
 router.post("/adminlogin", async (req, res) => {
-  try {
-    console.log("dwdwwd");
-    const user = await Admin.findBylogin(req.body.email, req.body.password);
-    console.log(user);
-    const token = await user.generateAuthToken(); //this method generates a token for login users
-    res.json({ user, token });
-  } catch (e) {
-    console.log(e);
-    res.status(400).send();
-  }
+	try {
+		console.log("dwdwwd");
+		const user = await Admin.findBylogin(req.body.email, req.body.password);
+		console.log(user);
+		const token = await user.generateAuthToken(); //this method generates a token for login users
+		res.json({ user, token });
+	} catch (e) {
+		console.log(e);
+		res.status(400).send();
+	}
 });
 
 //logout
 router.get("/adminlogout", auth1, (req, res) => {
-  try {
-    req.user.tokens = req.user.tokens.filter((token) => {
-      return token.token !== req.token;
-    });
-    req.user.save();
-    res.send("logout successful");
-  } catch (e) {
-    res.status(401).send(e);
-  }
+	try {
+		req.user.tokens = req.user.tokens.filter((token) => {
+			return token.token !== req.token;
+		});
+		req.user.save();
+		res.send("logout successful");
+	} catch (e) {
+		res.status(401).send(e);
+	}
 });
 //changepassword
 // router.post("/adminchangepassword", auth1, function (req, res) {
@@ -134,116 +134,122 @@ router.get("/adminlogout", auth1, (req, res) => {
 //   });
 // });
 
-router.post('/adminchangepassword',auth1, async(req,res) => {
-  try{
-    const {password , newpassword} = req.body;
+router.post("/adminchangepassword", auth1, async (req, res) => {
+	try {
+		const { userid, password, newpassword } = req.body;
 
-    console.log(req.user._id);
+		console.log(userid);
 
-    const data = await Admin.findById(req.user._id)
-    if(!data){
-      res.send('no user found')
-    }
-    console.log(data.password);
-    console.log(password);
+		const data = await Admin.findById(userid);
+		if (!data) {
+			res.send("no user found");
+		}
+		console.log(data.password);
+		console.log(password);
 
+		const pasaa = await bcrypt.compare(password, data.password);
+		//  data.password = newpassword
+		console.log(pasaa);
 
-    const pasaa = await bcrypt.compare(password, data.password)
-    //  data.password = newpassword
-    console.log(pasaa);
+		const hashed = await bcrypt.hash(newpassword, 8);
 
-        const hashed = await bcrypt.hash(newpassword, 8)
-        
-      const update = await Admin.findByIdAndUpdate(req.user._id,{password: hashed},{new:true})
-      console.log(update);
-  }catch(e){
-    console.log(e);
-    res.send(e)
-  }
-})
+		const update = await Admin.findByIdAndUpdate(
+			userid,
+			{ isFirstLogin: false, password: hashed },
+			{ new: true }
+		);
+		console.log(update);
+		res
+			.status(200)
+			.json({ success: true, message: "Password reset successful" });
+	} catch (e) {
+		console.log(e);
+		res.send(e);
+	}
+});
 router.get("/AdminUsersList", async (req, res) => {
-  try {
-    const postdata = await Admin.find();
+	try {
+		const postdata = await Admin.find();
 
-    res.status(200).json(postdata);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+		res.status(200).json(postdata);
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
 });
 
 router.get("/update_adminusers/:id", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  try {
-    const postdata = await Admin.findById(id);
+	try {
+		const postdata = await Admin.findById(id);
 
-    res.status(200).json(postdata);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+		res.status(200).json(postdata);
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
 });
 router.put("/update_adminusers_patch/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name, email, city, country, date } = req.body;
+	const { id } = req.params;
+	const { name, email, city, country, date } = req.body;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(404).send(`No post with id: ${id}`);
 
-  const updatepost = {
-    name,
-    email,
-    // password,
-    city,
-    country,
-    date,
-    // tokens,
-    _id: id,
-  };
+	const updatepost = {
+		name,
+		email,
+		// password,
+		city,
+		country,
+		date,
+		// tokens,
+		_id: id,
+	};
 
-  await Admin.findByIdAndUpdate(id, updatepost);
+	await Admin.findByIdAndUpdate(id, updatepost);
 
-  res.json(updatepost);
+	res.json(updatepost);
 });
 
 router.delete("/delete_adminusers/:id", async (req, res) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(404).send(`No post with id: ${id}`);
 
-  await Admin.findByIdAndRemove(id);
+	await Admin.findByIdAndRemove(id);
 
-  res.json({ message: "Post deleted successfully." });
+	res.json({ message: "Post deleted successfully." });
 });
 
 router.get("/suspenduser/:id", (req, res) => {
-  Admin.findById(req.params.id, (err, auth) => {
-    auth.status = false;
+	Admin.findById(req.params.id, (err, auth) => {
+		auth.status = false;
 
-    auth.save(function (err, user) {
-      if (err) {
-        console.log(err);
-      }
-    });
+		auth.save(function (err, user) {
+			if (err) {
+				console.log(err);
+			}
+		});
 
-    res.redirect("/admin/AdminUsersList");
-  });
+		res.redirect("/admin/AdminUsersList");
+	});
 });
 
 router.get("/makeliveuser/:id", (req, res) => {
-  Admin.findById(req.params.id, (err, auth) => {
-    auth.status = true;
+	Admin.findById(req.params.id, (err, auth) => {
+		auth.status = true;
 
-    auth.save(function (err, aut) {
-      if (err) {
-        res.send({
-          Success: "Error",
-        });
-      }
-    });
+		auth.save(function (err, aut) {
+			if (err) {
+				res.send({
+					Success: "Error",
+				});
+			}
+		});
 
-    res.redirect("/admin/AdminUsersList");
-  });
+		res.redirect("/admin/AdminUsersList");
+	});
 });
 
 module.exports = router;
