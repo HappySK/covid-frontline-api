@@ -58,4 +58,16 @@ route.patch("/updateinstitutiondetails/:id", async (req, res) => {
 	}
 });
 
+route.delete("/deleteinstitutiondetails/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+		await institutionModel.findByIdAndDelete(id, (err, institution) => {
+			if (err) return res.json({ success: false, message: err.message });
+			else return res.json({ success: true, message: "Deleted Successfully" });
+		});
+	} catch (error) {
+		return res.json({ success: false, message: error.message });
+	}
+});
+
 module.exports = route;
