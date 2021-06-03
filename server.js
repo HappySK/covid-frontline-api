@@ -38,8 +38,10 @@ app.use("/note", require("./routes/noteroutes.js"));
 app.use("/menu", require("./routes/menuroutes.js"));
 app.use("/submenu", require("./routes/submenuroutes.js"));
 app.use("/page", require("./routes/pageroutes.js"));
-
 app.use("/administrator", require("./routes/administratorroutes.js"));
+app.use("/institutiondetails", require("./routes/institutiondetails.js"));
+app.use("/socialmedia", require("./routes/socialmedia.js"));
+
 const CONNECTION_URL =
 	"mongodb+srv://kalyani:sushma1997@cluster0.9rilk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5050;
