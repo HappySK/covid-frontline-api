@@ -42,6 +42,11 @@ app.use("/administrator", require("./routes/administratorroutes.js"));
 app.use("/institutiondetails", require("./routes/institutiondetails.js"));
 app.use("/socialmedia", require("./routes/socialmedia.js"));
 app.use("/hospitaldetails", require("./routes/hospital.js"));
+app.use("/equipmentprovider", require("./routes/equipmentprovider.js"));
+app.use("/consultants", require("./routes/consultants.js"));
+app.use("/pharma", require("./routes/pharma"));
+app.use("/vaccine", require("./routes/vaccine"));
+app.use("/ambulanceservice", require("./routes/ambulance"));
 
 const CONNECTION_URL =
 	"mongodb+srv://kalyani:sushma1997@cluster0.9rilk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
